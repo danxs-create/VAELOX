@@ -1,4 +1,4 @@
-import { AgentCapability } from './agent';
+import { AgentCapability, AgentResult } from './agent';
 
 export enum WorkflowNodeType {
   PLANNER = 'PLANNER',
@@ -82,4 +82,30 @@ export interface ValidationReport {
   valid: boolean;
   issues: ValidationIssue[];
   errors: string[];
+}
+
+export enum WorkflowStatus {
+  IDLE = 'IDLE',
+  INITIALIZING = 'INITIALIZING',
+  RUNNING = 'RUNNING',
+  WAITING = 'WAITING',
+  PAUSED = 'PAUSED',
+  COMPLETED = 'COMPLETED',
+  FAILED = 'FAILED',
+  CANCELLED = 'CANCELLED',
+}
+
+export interface WorkflowResult {
+  status: WorkflowStatus;
+  duration: number;
+  agentResults: Record<string, AgentResult>;
+  errors: Error[];
+  warnings: string[];
+  tokenUsage: {
+    input: number;
+    output: number;
+    total: number;
+  };
+  cost: number;
+  metadata?: Record<string, unknown>;
 }
