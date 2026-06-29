@@ -6,6 +6,10 @@ export class CancellationToken {
     return this._isCancelled;
   }
 
+  public get isCancellationRequested(): boolean {
+    return this._isCancelled;
+  }
+
   public cancel(): void {
     if (this._isCancelled) return;
     this._isCancelled = true;
