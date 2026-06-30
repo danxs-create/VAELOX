@@ -1,3 +1,6 @@
+import { MainLayout } from '@/components/layout/MainLayout';
+
 export default function Page() {
-  return <div>Vaelox Backend</div>;
+  return <MainLayout />;
 }
+

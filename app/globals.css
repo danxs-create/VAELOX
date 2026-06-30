@@ -1,0 +1,68 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@theme {
+  --color-vaelox-bg: var(--vaelox-bg);
+  --color-vaelox-panel: var(--vaelox-panel);
+  --color-vaelox-surface: var(--vaelox-surface);
+  --color-vaelox-border: var(--vaelox-border);
+  --color-vaelox-primary: var(--vaelox-primary);
+  --color-vaelox-text: var(--vaelox-text);
+  --color-vaelox-muted: var(--vaelox-muted);
+
+  --color-brand-50: #eff6ff;
+  --color-brand-100: #dbeafe;
+  --color-brand-500: #3b82f6;
+  --color-brand-600: #2563eb;
+  --color-brand-900: #1e3a8a;
+  
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+}
+
+:root {
+  --vaelox-bg: #f9fafb; /* gray-50 */
+  --vaelox-panel: #ffffff; /* white */
+  --vaelox-surface: #f3f4f6; /* gray-100 */
+  --vaelox-border: #e5e7eb; /* gray-200 */
+  --vaelox-primary: #3b82f6; /* blue-500 */
+  --vaelox-text: #111827; /* gray-900 */
+  --vaelox-muted: #6b7280; /* gray-500 */
+}
+
+.dark {
+  --vaelox-bg: #030712; /* gray-950 */
+  --vaelox-panel: #111827; /* gray-900 */
+  --vaelox-surface: #1f2937; /* gray-800 */
+  --vaelox-border: #374151; /* gray-700 */
+  --vaelox-primary: #3b82f6; /* blue-500 */
+  --vaelox-text: #f9fafb; /* gray-50 */
+  --vaelox-muted: #9ca3af; /* gray-400 */
+}
+
+/* Safe Area Utility Classes */
+.safe-pt {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+.safe-pb {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.safe-pl {
+  padding-left: env(safe-area-inset-left, 0px);
+}
+.safe-pr {
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+.safe-mt {
+  margin-top: env(safe-area-inset-top, 0px);
+}
+.safe-mb {
+  margin-bottom: env(safe-area-inset-bottom, 0px);
+}
+.safe-ml {
+  margin-left: env(safe-area-inset-left, 0px);
+}
+.safe-mr {
+  margin-right: env(safe-area-inset-right, 0px);
+}
