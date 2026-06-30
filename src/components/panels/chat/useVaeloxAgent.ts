@@ -9,6 +9,7 @@ import { registerCoreAgents } from '@/core/agents/setup';
 import { ExecutionContext } from '@/types/context';
 import { WorkflowGraph } from '@/core/workflow/WorkflowGraph';
 import { WorkflowNode, WorkflowNodeType } from '@/types/workflow';
+import { globalMemoryManager } from '@/core/memory/globalMemorySystem';
 
 // Temporary setup for the backend singleton to avoid recreating every render
 let _engine: WorkflowEngine | null = null;
@@ -103,6 +104,14 @@ export function useVaeloxAgent() {
 
   const sendMessage = useCallback(async (text: string) => {
     if (!text.trim() || isGenerating) return;
+
+    // Real-time integration into working memory
+    globalMemoryManager.working.set(
+      `user_chat_query_${Date.now()}`,
+      text,
+      ['user_chat', 'interaction'],
+      { importance: 0.85 }
+    );
 
     const userMsg: ChatMessageData = {
       id: Date.now().toString(),
@@ -296,6 +305,14 @@ export function useVaeloxAgent() {
             setMessages(prev => prev.map(msg => 
               msg.id === assistMsgId ? { ...msg, isStreaming: false, thinkingState: undefined } : msg
             ));
+
+            // Save the response to session memory to show lifecycle activity
+            globalMemoryManager.session.set(
+              `agent_response_${Date.now()}`,
+              `Responded to user query "${text.substring(0, 40)}${text.length > 40 ? '...' : ''}" with a successful assistant response.`,
+              ['agent_completed', 'interaction'],
+              { importance: 0.7 }
+            );
           }
         }, 10); // Very fast token streaming
       }

@@ -1,4 +1,3 @@
-import { randomUUID } from 'crypto';
 import { IContextCompressor, ContextBudget } from '../../types/memory';
 import { EventBus } from '../events/EventBus';
 
@@ -19,7 +18,7 @@ export class ContextCompressor implements IContextCompressor {
     const compressed = context.substring(0, allowedChars) + '...';
     
     this.eventBus.publish('memory.compressed', {
-       id: randomUUID(),
+       id: typeof globalThis !== 'undefined' && globalThis.crypto ? globalThis.crypto.randomUUID() : Math.random().toString(36).substring(2),
        name: 'memory.compressed',
        timestamp: Date.now(),
        source: 'ContextCompressor',

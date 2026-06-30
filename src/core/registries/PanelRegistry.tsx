@@ -16,6 +16,7 @@ import { ExplorerPanel } from '@/components/layout/ExplorerPanel';
 import { AIChatPanel } from '@/components/panels/chat/AIChatPanel';
 import { ToolExecutionPanel } from '@/components/panels/tools/ToolExecutionPanel';
 import { WorkflowVisualizer } from '@/components/panels/workflow/WorkflowVisualizer';
+import { MemoryPanel } from '@/components/panels/memory/MemoryPanel';
 
 export interface PanelConfig {
   id: string;
@@ -112,15 +113,8 @@ class PanelRegistry {
       id: 'memory',
       title: 'Memory View',
       icon: Brain,
-      position: 'sidebar',
-      component: () => (
-        <div className="flex flex-col gap-2">
-          <span className="text-xs font-bold text-vaelox-muted uppercase tracking-wider">Agent Memory Layer</span>
-          <div className="p-4 border-2 border-dashed border-vaelox-border rounded text-center text-xs text-vaelox-muted">
-            Inspect working, session, project, and global memories.
-          </div>
-        </div>
-      )
+      position: 'bottom',
+      component: MemoryPanel
     });
 
     this.register({

@@ -1,4 +1,3 @@
-import { randomUUID } from 'crypto';
 import { MemoryEntry, MemoryType, MemoryQuery, MemoryMetadata, IMemoryStore } from '../../types/memory';
 import { EventBus } from '../events/EventBus';
 import { HybridRetrieval } from './HybridRetrieval';
@@ -26,7 +25,7 @@ export abstract class BaseMemory implements IMemoryStore {
     };
 
     const entry: MemoryEntry = {
-      id: existing ? existing.id : randomUUID(),
+      id: existing ? existing.id : (typeof globalThis !== 'undefined' && globalThis.crypto ? globalThis.crypto.randomUUID() : Math.random().toString(36).substring(2)),
       type: this.type,
       key,
       value,

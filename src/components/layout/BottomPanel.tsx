@@ -12,7 +12,8 @@ import {
   Maximize2, 
   Minimize2,
   AlertCircle,
-  FileText
+  FileText,
+  Brain
 } from 'lucide-react';
 import { panelRegistry } from '@/core/registries/PanelRegistry';
 import { cn } from '@/lib/utils';
@@ -22,10 +23,10 @@ export function BottomPanel() {
   const shouldReduceMotion = useReducedMotion();
 
   // Selected tab state inside bottom panel
-  const [activeTab, setActiveTab] = useState<'terminal' | 'tools' | 'output' | 'problems' | 'workflow'>('workflow');
+  const [activeTab, setActiveTab] = useState<'terminal' | 'tools' | 'output' | 'problems' | 'workflow' | 'memory'>('memory');
   
   // Height and expansion states
-  const [panelHeight, setPanelHeight] = useState(380);
+  const [panelHeight, setPanelHeight] = useState(480);
   const [isMobileExpanded, setIsMobileExpanded] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
 
@@ -36,10 +37,12 @@ export function BottomPanel() {
   const terminalPanel = panelRegistry.getPanel('terminal');
   const toolsPanel = panelRegistry.getPanel('tools');
   const workflowPanel = panelRegistry.getPanel('workflow');
+  const memoryPanel = panelRegistry.getPanel('memory');
 
   const TerminalComponent = terminalPanel ? terminalPanel.component : null;
   const ToolsComponent = toolsPanel ? toolsPanel.component : null;
   const WorkflowComponent = workflowPanel ? workflowPanel.component : null;
+  const MemoryComponent = memoryPanel ? memoryPanel.component : null;
 
   // Drag-to-resize logic on desktop
   const startResize = useCallback((e: React.MouseEvent) => {
@@ -122,6 +125,22 @@ export function BottomPanel() {
           {/* Panel Header & Tabs */}
           <div className="h-11 px-4 pt-1.5 flex items-center justify-between border-b border-vaelox-border shrink-0 bg-vaelox-surface/10 select-none">
             <div className="flex items-center gap-1 sm:gap-2 text-[11px] sm:text-xs font-semibold text-vaelox-muted h-full">
+              {/* Memory Tab */}
+              <button
+                onClick={() => setActiveTab('memory')}
+                className={cn(
+                  "px-2 sm:px-3 h-full flex items-center gap-1.5 cursor-pointer outline-none transition-all border-b-2",
+                  activeTab === 'memory'
+                    ? "text-brand-400 border-brand-500 font-bold"
+                    : "text-vaelox-muted border-transparent hover:text-vaelox-text"
+                )}
+                aria-selected={activeTab === 'memory'}
+                role="tab"
+              >
+                <Brain className="w-3.5 h-3.5 text-brand-400" />
+                <span>Memory Panel</span>
+              </button>
+
               {/* Workflow Visualizer Tab */}
               <button
                 onClick={() => setActiveTab('workflow')}
@@ -235,6 +254,10 @@ export function BottomPanel() {
 
           {/* Active View Content */}
           <div className="flex-1 overflow-hidden bg-vaelox-surface">
+            {activeTab === 'memory' && MemoryComponent && (
+              <MemoryComponent />
+            )}
+
             {activeTab === 'workflow' && WorkflowComponent && (
               <WorkflowComponent />
             )}
