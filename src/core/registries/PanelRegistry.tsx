@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { ExplorerPanel } from '@/components/layout/ExplorerPanel';
 import { AIChatPanel } from '@/components/panels/chat/AIChatPanel';
+import { ToolExecutionPanel } from '@/components/panels/tools/ToolExecutionPanel';
 
 export interface PanelConfig {
   id: string;
@@ -88,6 +89,14 @@ class PanelRegistry {
           <div className="text-vaelox-muted">$ _</div>
         </div>
       )
+    });
+
+    this.register({
+      id: 'tools',
+      title: 'Tool Executions',
+      icon: Workflow,
+      position: 'bottom',
+      component: ToolExecutionPanel
     });
 
     this.register({

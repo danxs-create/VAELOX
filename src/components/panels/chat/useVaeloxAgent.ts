@@ -128,6 +128,67 @@ export function useVaeloxAgent() {
 
         // Simulate streaming using EventBus
         let currentText = '';
+        
+        // Publish simulated WorkspaceSearchTool events so they pop up in real-time in the Tool Panel
+        const toolId = `tool-${Date.now()}`;
+        globalEventBus.publish('tool.queued', {
+          id: toolId,
+          name: 'tool.queued',
+          timestamp: Date.now(),
+          payload: {
+            id: toolId,
+            name: 'WorkspaceSearchTool',
+            description: `Scanning project files for: "${text.substring(0, 30)}${text.length > 30 ? '...' : ''}" context.`,
+            input: { query: text },
+            outputType: 'table'
+          },
+          source: 'WorkflowEngine'
+        });
+
+        setTimeout(() => {
+          globalEventBus.publish('tool.started', {
+            id: toolId,
+            name: 'tool.started',
+            timestamp: Date.now(),
+            payload: { id: toolId },
+            source: 'WorkflowEngine'
+          });
+        }, 300);
+
+        setTimeout(() => {
+          globalEventBus.publish('tool.progress', {
+            id: toolId,
+            name: 'tool.progress',
+            timestamp: Date.now(),
+            payload: {
+              id: toolId,
+              progress: 60,
+              message: 'Searching text matches across 14 component files...'
+            },
+            source: 'WorkflowEngine'
+          });
+        }, 700);
+
+        setTimeout(() => {
+          globalEventBus.publish('tool.completed', {
+            id: toolId,
+            name: 'tool.completed',
+            timestamp: Date.now(),
+            payload: {
+              id: toolId,
+              status: 'success',
+              output: [
+                { file: './src/contexts/WorkspaceContext.tsx', score: 0.94 },
+                { file: './src/components/panels/chat/useVaeloxAgent.ts', score: 0.82 }
+              ],
+              duration: 220,
+              tokenUsage: { input: 280, output: 85, total: 365 },
+              cost: 0.0002
+            },
+            source: 'WorkflowEngine'
+          });
+        }, 1200);
+
         const streamInterval = setInterval(() => {
           // Simulate some text generation while agent is running
           // Actually, we could hook into the event bus for real streaming,
