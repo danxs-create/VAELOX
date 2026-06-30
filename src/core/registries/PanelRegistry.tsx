@@ -13,6 +13,7 @@ import {
   Blocks
 } from 'lucide-react';
 import { ExplorerPanel } from '@/components/layout/ExplorerPanel';
+import { AIChatPanel } from '@/components/panels/chat/AIChatPanel';
 
 export interface PanelConfig {
   id: string;
@@ -72,22 +73,7 @@ class PanelRegistry {
       title: 'AI Chat',
       icon: MessageSquare,
       position: 'right',
-      component: () => (
-        <div className="h-full flex flex-col justify-between">
-          <div className="flex-1 flex flex-col justify-center items-center p-4 text-center">
-            <MessageSquare className="w-8 h-8 text-brand-500/50 mb-2" />
-            <span className="text-sm font-semibold text-vaelox-text mb-1">Vaelox Assistant</span>
-            <p className="text-xs text-vaelox-muted">Ask anything about your workspace, memory, or workflows.</p>
-          </div>
-          <div className="p-2 border-t border-vaelox-border">
-            <input 
-              type="text" 
-              placeholder="Ask AI..." 
-              className="w-full px-3 py-2 text-xs bg-vaelox-surface border border-vaelox-border rounded-md focus:outline-none focus:ring-1 focus:ring-brand-500"
-            />
-          </div>
-        </div>
-      )
+      component: AIChatPanel
     });
 
     this.register({
