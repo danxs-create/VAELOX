@@ -22,10 +22,10 @@ export function BottomPanel() {
   const shouldReduceMotion = useReducedMotion();
 
   // Selected tab state inside bottom panel
-  const [activeTab, setActiveTab] = useState<'terminal' | 'tools' | 'output' | 'problems'>('tools');
+  const [activeTab, setActiveTab] = useState<'terminal' | 'tools' | 'output' | 'problems' | 'workflow'>('workflow');
   
   // Height and expansion states
-  const [panelHeight, setPanelHeight] = useState(300);
+  const [panelHeight, setPanelHeight] = useState(380);
   const [isMobileExpanded, setIsMobileExpanded] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
 
@@ -35,9 +35,11 @@ export function BottomPanel() {
   // Find panel components
   const terminalPanel = panelRegistry.getPanel('terminal');
   const toolsPanel = panelRegistry.getPanel('tools');
+  const workflowPanel = panelRegistry.getPanel('workflow');
 
   const TerminalComponent = terminalPanel ? terminalPanel.component : null;
   const ToolsComponent = toolsPanel ? toolsPanel.component : null;
+  const WorkflowComponent = workflowPanel ? workflowPanel.component : null;
 
   // Drag-to-resize logic on desktop
   const startResize = useCallback((e: React.MouseEvent) => {
@@ -120,6 +122,22 @@ export function BottomPanel() {
           {/* Panel Header & Tabs */}
           <div className="h-11 px-4 pt-1.5 flex items-center justify-between border-b border-vaelox-border shrink-0 bg-vaelox-surface/10 select-none">
             <div className="flex items-center gap-1 sm:gap-2 text-[11px] sm:text-xs font-semibold text-vaelox-muted h-full">
+              {/* Workflow Visualizer Tab */}
+              <button
+                onClick={() => setActiveTab('workflow')}
+                className={cn(
+                  "px-2 sm:px-3 h-full flex items-center gap-1.5 cursor-pointer outline-none transition-all border-b-2",
+                  activeTab === 'workflow'
+                    ? "text-brand-400 border-brand-500 font-bold"
+                    : "text-vaelox-muted border-transparent hover:text-vaelox-text"
+                )}
+                aria-selected={activeTab === 'workflow'}
+                role="tab"
+              >
+                <ToolsIcon className="w-3.5 h-3.5 text-brand-400" />
+                <span>Workflow Visualizer</span>
+              </button>
+
               {/* Tool Execution Tab */}
               <button
                 onClick={() => setActiveTab('tools')}
@@ -217,6 +235,10 @@ export function BottomPanel() {
 
           {/* Active View Content */}
           <div className="flex-1 overflow-hidden bg-vaelox-surface">
+            {activeTab === 'workflow' && WorkflowComponent && (
+              <WorkflowComponent />
+            )}
+
             {activeTab === 'tools' && ToolsComponent && (
               <ToolsComponent />
             )}

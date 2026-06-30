@@ -15,6 +15,7 @@ import {
 import { ExplorerPanel } from '@/components/layout/ExplorerPanel';
 import { AIChatPanel } from '@/components/panels/chat/AIChatPanel';
 import { ToolExecutionPanel } from '@/components/panels/tools/ToolExecutionPanel';
+import { WorkflowVisualizer } from '@/components/panels/workflow/WorkflowVisualizer';
 
 export interface PanelConfig {
   id: string;
@@ -104,14 +105,7 @@ class PanelRegistry {
       title: 'Workflow',
       icon: Workflow,
       position: 'sidebar',
-      component: () => (
-        <div className="flex flex-col gap-2">
-          <span className="text-xs font-bold text-vaelox-muted uppercase tracking-wider">Workflow Executor</span>
-          <div className="p-4 border-2 border-dashed border-vaelox-border rounded text-center text-xs text-vaelox-muted">
-            Configure agentic execution pipelines and workflows.
-          </div>
-        </div>
-      )
+      component: WorkflowVisualizer
     });
 
     this.register({
