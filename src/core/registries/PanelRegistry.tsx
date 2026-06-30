@@ -17,6 +17,7 @@ import { AIChatPanel } from '@/components/panels/chat/AIChatPanel';
 import { ToolExecutionPanel } from '@/components/panels/tools/ToolExecutionPanel';
 import { WorkflowVisualizer } from '@/components/panels/workflow/WorkflowVisualizer';
 import { MemoryPanel } from '@/components/panels/memory/MemoryPanel';
+import { TerminalPanel } from '@/components/panels/terminal/TerminalPanel';
 
 export interface PanelConfig {
   id: string;
@@ -84,13 +85,7 @@ class PanelRegistry {
       title: 'Terminal',
       icon: Terminal,
       position: 'bottom',
-      component: () => (
-        <div className="font-mono text-xs flex flex-col gap-1 text-green-500 p-2">
-          <div>$ neofetch --ascii_distro vaelox</div>
-          <div className="text-vaelox-text">Vaelox OS v1.0.0 (x86_64)</div>
-          <div className="text-vaelox-muted">$ _</div>
-        </div>
-      )
+      component: TerminalPanel
     });
 
     this.register({

@@ -267,7 +267,7 @@ export function BottomPanel() {
             )}
 
             {activeTab === 'terminal' && TerminalComponent && (
-              <div className="h-full overflow-auto p-4 font-mono text-sm">
+              <div className="h-full w-full">
                 <TerminalComponent />
               </div>
             )}
