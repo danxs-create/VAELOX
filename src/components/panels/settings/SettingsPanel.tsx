@@ -112,14 +112,23 @@ export function SettingsPanel() {
 
           {/* Bottom Actions */}
           <div className="p-3 border-t border-vaelox-border hidden md:flex flex-col gap-2 shrink-0">
-            <button className="flex items-center gap-2 text-xs text-vaelox-muted hover:text-vaelox-text px-2 py-1.5 hover:bg-vaelox-surface rounded transition-colors w-full">
+            <button 
+              className="flex items-center gap-2 text-xs text-vaelox-muted hover:text-vaelox-text px-2 py-1.5 hover:bg-vaelox-surface rounded transition-colors w-full opacity-50 cursor-not-allowed"
+              title="Not currently supported by backend"
+            >
               <Download className="w-3.5 h-3.5" /> Export Settings
             </button>
-            <button className="flex items-center gap-2 text-xs text-vaelox-muted hover:text-vaelox-text px-2 py-1.5 hover:bg-vaelox-surface rounded transition-colors w-full">
+            <button 
+              className="flex items-center gap-2 text-xs text-vaelox-muted hover:text-vaelox-text px-2 py-1.5 hover:bg-vaelox-surface rounded transition-colors w-full opacity-50 cursor-not-allowed"
+              title="Not currently supported by backend"
+            >
               <Upload className="w-3.5 h-3.5" /> Import Settings
             </button>
             <div className="h-px bg-vaelox-border my-1" />
-            <button className="flex items-center gap-2 text-xs text-red-400 hover:text-red-300 px-2 py-1.5 hover:bg-red-500/10 rounded transition-colors w-full">
+            <button 
+              className="flex items-center gap-2 text-xs text-red-400 hover:text-red-300 px-2 py-1.5 hover:bg-red-500/10 rounded transition-colors w-full opacity-50 cursor-not-allowed"
+              title="Not currently supported by backend"
+            >
               <RotateCcw className="w-3.5 h-3.5" /> Reset All
             </button>
           </div>
@@ -192,9 +201,12 @@ function SettingItem({ label, description, control }: { label: string, descripti
 }
 
 // Controls
-function Switch({ checked, onChange }: { checked: boolean, onChange: (c: boolean) => void }) {
+function Switch({ checked, onChange, ariaLabel }: { checked: boolean, onChange: (c: boolean) => void, ariaLabel?: string }) {
   return (
     <button 
+      role="switch"
+      aria-checked={checked}
+      aria-label={ariaLabel}
       onClick={() => onChange(!checked)}
       className={cn(
         "relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center justify-center rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500",

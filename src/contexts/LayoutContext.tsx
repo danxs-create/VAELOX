@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback, useMemo } from 'react';
 
 type PanelState = 'open' | 'closed';
 type MobileTab = 'home' | 'explorer' | 'ai' | 'terminal' | 'settings';
@@ -160,55 +160,60 @@ export function LayoutProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const toggleSidebar = () => {
+  const toggleSidebar = useCallback(() => {
     setSidebarState(prev => (prev === 'open' ? 'closed' : 'open'));
-  };
+  }, []);
 
-  const toggleRightPanel = () => {
+  const toggleRightPanel = useCallback(() => {
     setRightPanelState(prev => (prev === 'open' ? 'closed' : 'open'));
-  };
+  }, []);
 
-  const toggleBottomPanel = () => {
+  const toggleBottomPanel = useCallback(() => {
     setBottomPanelState(prev => (prev === 'open' ? 'closed' : 'open'));
-  };
+  }, []);
+
+  const value = useMemo(() => ({
+    sidebarState,
+    setSidebarState,
+    toggleSidebar,
+    
+    rightPanelState,
+    setRightPanelState,
+    toggleRightPanel,
+    
+    bottomPanelState,
+    setBottomPanelState,
+    toggleBottomPanel,
+    
+    activeActivity,
+    setActiveActivity,
+    
+    // Mobile layout states
+    isMobile,
+    keyboardOpen,
+    mobileTab,
+    setMobileTab,
+    drawerOpen,
+    setDrawerOpen,
+    drawerPanel,
+    setDrawerPanel,
+    
+    // Command Palette
+    commandPaletteOpen,
+    setCommandPaletteOpen,
+    
+    // Settings Overlay
+    settingsOpen,
+    setSettingsOpen,
+  }), [
+    sidebarState, toggleSidebar, rightPanelState, toggleRightPanel,
+    bottomPanelState, toggleBottomPanel, activeActivity,
+    isMobile, keyboardOpen, mobileTab, drawerOpen, drawerPanel,
+    commandPaletteOpen, settingsOpen
+  ]);
 
   return (
-    <LayoutContext.Provider
-      value={{
-        sidebarState,
-        setSidebarState,
-        toggleSidebar,
-        
-        rightPanelState,
-        setRightPanelState,
-        toggleRightPanel,
-        
-        bottomPanelState,
-        setBottomPanelState,
-        toggleBottomPanel,
-        
-        activeActivity,
-        setActiveActivity,
-        
-        // Mobile layout states
-        isMobile,
-        keyboardOpen,
-        mobileTab,
-        setMobileTab,
-        drawerOpen,
-        setDrawerOpen,
-        drawerPanel,
-        setDrawerPanel,
-        
-        // Command Palette
-        commandPaletteOpen,
-        setCommandPaletteOpen,
-        
-        // Settings Overlay
-        settingsOpen,
-        setSettingsOpen,
-      }}
-    >
+    <LayoutContext.Provider value={value}>
       {children}
     </LayoutContext.Provider>
   );

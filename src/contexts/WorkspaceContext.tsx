@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 'use client';
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode, useMemo } from 'react';
 import { globalEventBus } from '@/core/events/globalEventBus';
 import { PermissionManager } from '@/core/permissions/PermissionManager';
 import { Permission } from '@/core/constants/permissions';
@@ -580,50 +580,57 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem(STORAGE_KEYS.RECENT_FILES);
   };
 
+  const value = useMemo(() => ({
+    files,
+    loading,
+    error,
+    refreshWorkspace,
+    
+    activeFile,
+    activeFileContent,
+    openTabs,
+    setOpenTabs,
+    pinnedTabs,
+    togglePinTab,
+    activeTab,
+    fileContentsCache,
+    dirtyFiles,
+    openFile,
+    closeTab,
+    setActiveTab,
+    updateFileContent,
+    saveActiveFile,
+    
+    openFolderPaths,
+    toggleFolder,
+    setFolderOpen,
+
+    createNode,
+    renameNode,
+    deleteNode,
+    duplicateNode,
+    moveNode,
+
+    favorites,
+    toggleFavorite,
+    pinnedFolders,
+    togglePinFolder,
+    recentFiles,
+    clearRecentFiles,
+
+    searchQuery,
+    setSearchQuery,
+  }), [
+    files, loading, error, refreshWorkspace, activeFile, activeFileContent,
+    openTabs, pinnedTabs, activeTab, fileContentsCache, dirtyFiles, openFile,
+    closeTab, setActiveTab, updateFileContent, saveActiveFile, openFolderPaths,
+    toggleFolder, setFolderOpen, createNode, renameNode, deleteNode, duplicateNode,
+    moveNode, favorites, toggleFavorite, pinnedFolders, togglePinFolder,
+    recentFiles, clearRecentFiles, searchQuery, setSearchQuery
+  ]);
+
   return (
-    <WorkspaceContext.Provider
-      value={{
-        files,
-        loading,
-        error,
-        refreshWorkspace,
-        
-        activeFile,
-        activeFileContent,
-        openTabs,
-        setOpenTabs,
-        pinnedTabs,
-        togglePinTab,
-        activeTab,
-        fileContentsCache,
-        dirtyFiles,
-        openFile,
-        closeTab,
-        setActiveTab,
-        updateFileContent,
-        saveActiveFile,
-        
-        openFolderPaths,
-        toggleFolder,
-        setFolderOpen,
-
-        createNode,
-        renameNode,
-        deleteNode,
-        duplicateNode,
-        moveNode,
-
-        favorites,
-        toggleFavorite,
-        pinnedFolders,
-        togglePinFolder,
-        recentFiles,
-        clearRecentFiles,
-
-        searchQuery,
-        setSearchQuery,
-      }}
-    >
+    <WorkspaceContext.Provider value={value}>
       {children}
     </WorkspaceContext.Provider>
   );
