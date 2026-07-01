@@ -18,7 +18,8 @@ export function ActivityBar() {
     setRightPanelState,
     toggleRightPanel, 
     toggleBottomPanel,
-    setCommandPaletteOpen
+    setCommandPaletteOpen,
+    setSettingsOpen
   } = useLayout();
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -39,6 +40,11 @@ export function ActivityBar() {
     
     if (id === 'chat') {
       toggleRightPanel();
+      return;
+    }
+    
+    if (id === 'settings') {
+      setSettingsOpen(true);
       return;
     }
 

@@ -35,6 +35,10 @@ interface LayoutContextType {
   // Command Palette
   commandPaletteOpen: boolean;
   setCommandPaletteOpen: (open: boolean) => void;
+  
+  // Settings Overlay
+  settingsOpen: boolean;
+  setSettingsOpen: (open: boolean) => void;
 }
 
 const LayoutContext = createContext<LayoutContextType | undefined>(undefined);
@@ -62,6 +66,7 @@ export function LayoutProvider({ children }: { children: ReactNode }) {
   
   // Command Palette state
   const [commandPaletteOpen, setCommandPaletteOpen] = useState<boolean>(false);
+  const [settingsOpen, setSettingsOpen] = useState<boolean>(false);
 
   // Load and sync state on mount
   useEffect(() => {
@@ -198,6 +203,10 @@ export function LayoutProvider({ children }: { children: ReactNode }) {
         // Command Palette
         commandPaletteOpen,
         setCommandPaletteOpen,
+        
+        // Settings Overlay
+        settingsOpen,
+        setSettingsOpen,
       }}
     >
       {children}

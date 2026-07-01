@@ -10,6 +10,7 @@ import { StatusBar } from './StatusBar';
 import { CommandPalette } from './CommandPalette';
 import { MobileDrawer } from './MobileDrawer';
 import { BottomNav } from './BottomNav';
+import { SettingsPanel } from '../panels/settings/SettingsPanel';
 import { LayoutProvider, useLayout } from '@/contexts/LayoutContext';
 import { WorkspaceProvider } from '@/contexts/WorkspaceContext';
 
@@ -21,6 +22,9 @@ function LayoutContent() {
     <div className="flex flex-col h-screen w-screen overflow-hidden bg-vaelox-bg text-vaelox-text selection:bg-brand-500/30">
       {/* Search / Command Palette Modal Overlay */}
       <CommandPalette />
+      
+      {/* Settings Modal Overlay */}
+      <SettingsPanel />
 
       {/* Slide-in Drawers for Mobile Navigation */}
       <MobileDrawer />

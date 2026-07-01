@@ -23,6 +23,7 @@ export function BottomNav() {
     sidebarState,
     setSidebarState,
     setActiveActivity,
+    setSettingsOpen,
   } = useLayout();
 
   if (!isMobile) return null;
@@ -61,12 +62,7 @@ export function BottomNav() {
       setDrawerOpen(false);
       setBottomPanelState(bottomPanelState === 'open' ? 'closed' : 'open');
     } else if (tab === 'settings') {
-      // Open settings in mobile drawer or left sidebar
-      setRightPanelState('closed');
-      setBottomPanelState('closed');
-      setDrawerPanel('extensions'); // Settings or extensions can be selected
-      setDrawerOpen(true);
-      setActiveActivity('settings');
+      setSettingsOpen(true);
     }
   };
 
